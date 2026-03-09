@@ -10,16 +10,12 @@ class MergeSort
 public:
     void sort(typename std::vector<T>::iterator start, typename std::vector<T>::iterator end)
     {
-        
-    };
-
-    void mergeSort(typename std::vector<T>::iterator start, typename std::vector<T>::iterator end){
         if (end - start <= 1){
             return;
         }
         typename std::vector<T>::iterator mid = start + (end - start) / 2;
-        mergeSort(start, mid);
-        mergeSort(mid, end);
+        sort(start, mid);
+        sort(mid, end);
         merge(start, mid, end);
     };
 
@@ -48,7 +44,7 @@ public:
         }
 
         while(prawyTmp != end){
-            tmp.push_back(*prawyTmp)
+            tmp.push_back(*prawyTmp);
             ++prawyTmp;
         }
 
