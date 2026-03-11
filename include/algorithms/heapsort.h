@@ -14,7 +14,7 @@ class Heap
   public:
     Heap(typename std::vector<T>::iterator start, typename std::vector<T>::iterator end)
     {
-        this->h_size = (end - start);
+        this->h_size = std::distance(start, end);
         this->h_start = start;
         this->h_end = end;
 

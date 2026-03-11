@@ -13,7 +13,7 @@ public:
         if (end - start <= 1){
             return;
         }
-        typename std::vector<T>::iterator mid = start + (end - start) / 2;
+        typename std::vector<T>::iterator mid = start + std::distance(start, end) / 2;
         sort(start, mid);
         sort(mid, end);
         merge(start, mid, end);
@@ -23,7 +23,7 @@ private:
     void merge(typename std::vector<T>::iterator start, typename std::vector<T>::iterator mid, typename std::vector<T>::iterator end){
         std::vector<T> tmp;
 
-        tmp.reserve(end - start);
+        tmp.reserve(std::distance(start, end));
 
         typename std::vector<T>::iterator lewyTmp = start;
         typename std::vector<T>::iterator prawyTmp = mid;

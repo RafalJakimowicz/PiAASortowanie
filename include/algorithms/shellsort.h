@@ -10,8 +10,8 @@ class ShellSort
 public:
     void sort(typename std::vector<T>::iterator start, typename std::vector<T>::iterator end)
     {
-        for (int przerwa = (end-start) / 2; przerwa >= 1; przerwa /= 2){
-            for (int i = przerwa; i < (end - start); i++){
+        for (int przerwa = std::distance(start, end) / 2; przerwa >= 1; przerwa /= 2){
+            for (int i = przerwa; i < std::distance(start, end); i++){
                T key = *(start + i);
                typename std::vector<T>::iterator j = start + i;
 
