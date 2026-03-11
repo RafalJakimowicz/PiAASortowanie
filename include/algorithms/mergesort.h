@@ -18,7 +18,8 @@ public:
         sort(mid, end);
         merge(start, mid, end);
     };
-
+    
+private:
     void merge(typename std::vector<T>::iterator start, typename std::vector<T>::iterator mid, typename std::vector<T>::iterator end){
         std::vector<T> tmp;
 

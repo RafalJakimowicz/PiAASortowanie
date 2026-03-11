@@ -18,7 +18,7 @@ public:
         sort(start, pivot );
         sort(pivot+1, end);
     };
-
+protected:
     typename std::vector<T>::iterator partition(typename std::vector<T>::iterator start, typename std::vector<T>::iterator end){
         //pivot jako ostatnia pozycja w przedziale
         typename std::vector<T>::iterator pivot = end - 1;
