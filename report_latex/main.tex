@@ -1,0 +1,102 @@
+\documentclass[12pt, a4paper]{article}
+
+% Pakiety podstawowe
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage{lmodern}
+
+% Pakiety do grafiki i tabel
+\usepackage{graphicx} % Do wstawiania wykresów
+\usepackage{float}    % Do precyzyjnego pozycjonowania (opcja [H])
+\usepackage{booktabs} % Do ładniejszych tabel
+\usepackage{geometry} % Ustawienia marginesów
+\geometry{a4paper, margin=2.5cm}
+
+% Pakiety matematyczne
+\usepackage{amsmath}
+
+% Pakiet do linków
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% --- METADANE DOKUMENTU ---
+\title{Projektowanie i analiza algorytmów\\ \large Raport: Algorytmy sortowania}
+\author{Rafał Jakimowicz \\ 284082}
+\date{Marzec 2026}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% --- 1. WPROWADZENIE ---
+\section{Wprowadzenie}
+W niniejszym raporcie przedstawiono implementację oraz analizę efektywności trzech wybranych algorytmów sortowania: sortowanie przez scalanie, Quicksort, sortowanie introspektywne. Celem było zbadanie czasu działania algorytmów w zależności od rozmiaru danych wejściowych oraz ich początkowego stopnia uporządkowania. Algorytmy zostały zaimplementowane w języku C++. Uporządkowanie danych oraz stworzenie wykresów zostało wykonane w Python. Cały kod źródłowy został opublikowany na publiczne  \href{https://github.com/RafalJakimowicz/PiAASortowanie}{repozytorium Github}
+
+% --- 2. OPIS ALGORYTMÓW ---
+\section{Opis badanych algorytmów}
+Poniżej zostanie opisana teoretyczna charakterystyka wybranych metod sortowania, oraz opisana ich teoretyczna złożoność czasowa algorytmów dla przypadku średniego i najgorszego.
+
+\subsection{Algorytm 1: Sortowanie przez scalanie}
+Krótki opis działania algorytmu...
+\begin{itemize}
+    \item Złożoność czasowa (przypadek średni): $\mathcal{O}(N\log{N})$
+    \item Złożoność czasowa (przypadek najgorszy): $\mathcal{O}(N\log{N})$
+\end{itemize}
+
+\subsection{Algorytm 2: Quicksort}
+Krótki opis działania algorytmu...
+\begin{itemize}
+    \item Złożoność czasowa (przypadek średni): $\mathcal{O}(N\log{N})$
+    \item Złożoność czasowa (przypadek najgorszy): $\mathcal{O}(n^2)$
+\end{itemize}
+
+\subsection{Algorytm 3: sortowanie introspektywne}
+Krótki opis działania algorytmu...
+\begin{itemize}
+    \item Złożoność czasowa (przypadek średni): $\mathcal{O}(N\log{N})$
+    \item Złożoność czasowa (przypadek najgorszy): $\mathcal{O}(N\log{N})$
+\end{itemize}
+
+% --- 3. EKSPERYMENTY I WYNIKI ---
+\section{Przebieg eksperymentów i wyniki}
+% Zgodnie z wytycznymi: omówienie przebiegu eksperymentów i wyniki w postaci tabel/wykresów.
+Eksperymenty przeprowadzono dla 100 losowych tablic o rozmiarach: 10 000, 50 000, 100 000, 500 000 oraz 1 000 000. Badano czas wykonania dla tablic losowych, częściowo posortowanych (od 25\% do 99,7\%) oraz posortowanych w odwrotnej kolejności.
+
+\subsection{Wyniki dla tablic całkowicie losowych}
+Tutaj opisz, jak zachowały się algorytmy. Poniżej przykład wstawienia wykresu wygenerowanego w Pythonie:
+
+% Przykład wstawienia obrazka (odkomentuj i zmień nazwę pliku, gdy wygenerujesz wykres)
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{wykres_losowe.png}
+%     \caption{Porównanie czasów działania dla danych losowych}
+%     \label{fig:losowe}
+% \end{figure}
+
+\subsection{Wpływ początkowego uporządkowania danych}
+Tutaj wstaw i skomentuj wykresy dla różnego procentu posortowania oraz dla tablic ułożonych odwrotnie.
+
+% --- 4. PODSUMOWANIE I WNIOSKI ---
+\section{Podsumowanie i wnioski}
+% Zgodnie z wytycznymi: wnioski i wyjaśnienie niezgodności z przewidywaniami.
+Podsumowanie uzyskanych wyników. 
+W tej sekcji odnieś się do tego, czy czasy zmierzone w eksperymentach pokrywają się z teoretyczną złożonością algorytmów opisaną w rozdziale 2. Jeśli np. QuickSort zadziałał gorzej na posortowanych danych (osiągając czas $\mathcal{O}(N^2)$), należy to tutaj wyjaśnić.
+
+% --- 5. LITERATURA ---
+\section{Literatura}
+% Zgodnie z wytycznymi: literatura i materiały.
+\begin{thebibliography}{9}
+    \bibitem{jelen} Jeleń Ł., \textit{Notatki do wykładu}. %
+    \bibitem{cormen} Cormen T., Leiserson C.E., Rivest R.L., Stein C., \textit{Wprowadzenie do algorytmów}, Wydawnictwo Naukowe PWN. %
+    \bibitem Dokumentacja C++.
+\end{thebibliography}
+
+\end{document}
