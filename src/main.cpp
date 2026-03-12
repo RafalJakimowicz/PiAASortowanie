@@ -127,11 +127,11 @@ int zmierzQuickSort(std::vector<int> liczbyElementow, std::vector<double> procen
         for(double procentPosortowanych: procentyPosortowanych){
             for(int n = 1; n <= 100; n++){
                 std::cout << "QuickSort -> L.elementow: " << liczbaElementow << ". P.posortowanych: " << procentPosortowanych << ". Test nr." << n << std::endl;
-                MergeSort<uint32_t> merge;
+                QuickSort<uint32_t> quick;
                 std::vector<uint32_t> doSortowania = wygenerujTablice(procentPosortowanych, liczbaElementow);
 
                 auto start = std::chrono::high_resolution_clock::now();
-                merge.sort(doSortowania.begin(), doSortowania.end());
+                quick.sort(doSortowania.begin(), doSortowania.end());
                 auto stop = std::chrono::high_resolution_clock::now();
 
                 std::chrono::duration<double, std::milli> delta = stop - start;
@@ -162,11 +162,11 @@ int zmierzIntroSort(std::vector<int> liczbyElementow, std::vector<double> procen
         for(double procentPosortowanych: procentyPosortowanych){
             for(int n = 1; n <= 100; n++){
                 std::cout << "IntroSort -> L.elementow: " << liczbaElementow << ". P.posortowanych: " << procentPosortowanych << ". Test nr." << n << std::endl;
-                MergeSort<uint32_t> merge;
+                IntroSort<uint32_t> intro;
                 std::vector<uint32_t> doSortowania = wygenerujTablice(procentPosortowanych, liczbaElementow);
 
                 auto start = std::chrono::high_resolution_clock::now();
-                merge.sort(doSortowania.begin(), doSortowania.end());
+                intro.sort(doSortowania.begin(), doSortowania.end());
                 auto stop = std::chrono::high_resolution_clock::now();
 
                 std::chrono::duration<double, std::milli> delta = stop - start;
