@@ -3,6 +3,7 @@
 #include <chrono>
 #include <random>
 #include <string>
+#include <thread>
 #include <format>
 #include <fstream>
 #include <algorithm>
@@ -22,9 +23,21 @@ int main(int argc, char* argv[])
     const std::vector<double> procentyPosortowanych {0.00, 0.250, 0.500, 0.750, 0.950, 0.990, 0.997, -1.00};
     std::cout<< "-----Test Efektywnosci algorytmow sortowania-----"<<std::endl;
 
-    zmierzMergeSort(liczbyElementow, procentyPosortowanych);
-    zmierzQuickSort(liczbyElementow, procentyPosortowanych);
-    zmierzIntroSort(liczbyElementow, procentyPosortowanych);
+    std::thread mergeThread(zmierzMergeSort, liczbyElementow, procentyPosortowanych);
+    std::thread quickThread(zmierzQuickSort, liczbyElementow, procentyPosortowanych);
+    std::thread introThread(zmierzIntroSort, liczbyElementow, procentyPosortowanych);
+
+    if(mergeThread.joinable()){
+        mergeThread.join();
+    }
+
+    if(quickThread.joinable()){
+        quickThread.join();
+    }
+
+    if(introThread.joinable()){
+        introThread.join();
+    }
 
     return 0;
 }
@@ -136,7 +149,7 @@ int zmierzQuickSort(std::vector<int> liczbyElementow, std::vector<double> procen
 
 int zmierzIntroSort(std::vector<int> liczbyElementow, std::vector<double> procentyPosortowanych){
     std::cout << "Rozpoczynam testy Intro Sorta" << std::endl;
-    std::string nazwaPliku = "Introsort.csv";
+    std::string nazwaPliku = "introsort.csv";
     std::ofstream plikWynikow(nazwaPliku, std::ios::app);
     uint32_t indexWPliku = 0;
 
