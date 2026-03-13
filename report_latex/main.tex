@@ -44,24 +44,24 @@ W niniejszym raporcie przedstawiono implementację oraz analizę efektywności t
 
 % --- 2. OPIS ALGORYTMÓW ---
 \section{Opis badanych algorytmów}
-Poniżej zostanie opisana teoretyczna charakterystyka wybranych metod sortowania, oraz opisana ich teoretyczna złożoność czasowa algorytmów dla przypadku średniego i najgorszego.
+Poniżej zostanie opisana teoretyczna charakterystyka wybranych metod sortowania oraz ich teoretyczna złożoność czasowa algorytmów dla przypadku średniego i najgorszego.
 
 \subsection{Algorytm 1: Sortowanie przez scalanie}
-Algorytm działający zgodnie z zasadą "Divide and Conquer", dzielący sortowaną strukturę na coraz mniejsze fragmenty za każdym razem na połowy z wykorzystaniem rekurencji które są poźniej scalane w posortowaną strukturę. 
+Algorytm działający zgodnie z zasadą "Divide and Conquer", dzielący sortowaną strukturę na coraz mniejsze fragmenty, za każdym razem na połowy, z wykorzystaniem rekurencji, które są poźniej scalane w posortowaną strukturę. 
 \begin{itemize}
     \item Złożoność czasowa (przypadek średni): $\mathcal{O}(N\log{N})$
     \item Złożoność czasowa (przypadek najgorszy): $\mathcal{O}(N\log{N})$
 \end{itemize}
 
 \subsection{Algorytm 2: Quicksort}
-Algorytm działający zgodnie z zasadą "Devide and Conquer", w strukturze wybierany jest element i po jego lewej stronie są umieszczane elementy nie większe od niego a po prawej elementy większe, co powoduje poprawne ułożenie danego elementu w tablicy, element ten nosi nazwę pivot. Algorytm jest powtarzany rekurencyjnie dla liczb wiekszych i mniejszych od pivot. Implemenatcja wybiera pivot metodą "Mediany z trzech".
+Algorytm działający zgodnie z zasadą "Divide and Conquer", w strukturze wybierany jest element, a po jego lewej stronie umieszczane są elementy nie większe od niego, a po prawej elementy większe, co powoduje poprawne ułożenie danego elementu w tablicy; element ten nosi nazwę pivot. Algorytm jest powtarzany rekurencyjnie dla liczb wiekszych i mniejszych od pivot. Implementacja wybiera pivot metodą "Mediany z trzech".
 \begin{itemize}
     \item Złożoność czasowa (przypadek średni): $\mathcal{O}(N\log{N})$
     \item Złożoność czasowa (przypadek najgorszy): $\mathcal{O}(n^2)$
 \end{itemize}
 
 \subsection{Algorytm 3: sortowanie introspektywne}
-Algorytm hybrydowy bazujący na algorytmie Quicksort, implemetujący również sortowanie przez wstawianie i sortowanie przez kopcowanie. Algorytm mierzy warstwy rekurencji sortowania Quicksort i jeśli głębokość przekroczy wartość optymalną zmienia sie na sortowanie przez kopcowanie dla tego fragmentu danych. Dodatkową właściwością jest również zamiana algorytmu sortowania na sortowanie przez wstawianie dla fragmentów poniżej danej liczby elementów. 
+Algorytm hybrydowy bazujący na algorytmie Quicksort, implemetujący również sortowanie przez wstawianie i sortowanie przez kopcowanie. Algorytm mierzy warstwy rekurencji sortowania Quicksort i jeśli głębokość przekroczy wartość optymalną, zmienia sie na sortowanie przez kopcowanie dla tego fragmentu danych. Dodatkową właściwością jest również zamiana algorytmu sortowania na sortowanie przez wstawianie dla fragmentów poniżej danej liczby elementów. 
 \begin{itemize}
     \item Złożoność czasowa (przypadek średni): $\mathcal{O}(N\log{N})$
     \item Złożoność czasowa (przypadek najgorszy): $\mathcal{O}(N\log{N})$
@@ -99,7 +99,7 @@ Algorytmy zostały porównane w sortowaniu danych o rozkładzie losowym, średni
     \label{fig:losowe}
 \end{figure}
 
-Wszystkie algorytmy dla danych nieposortowanych zbliżają się do średniej złożoności czasowej równej $\mathcal{O}(N\log{N}) $, co jest ich maksymalną potencjalną wydajnością. Najwydajniejsze okazało się w warunkach testowych sortowanie introspektywne, wykorzystuje szybkość algorytmu Quicksort oraz przy niekorzystnym ułożeniu danych zmienia algorytmy sortowania na bardziej wydajne. Najmniej wydajne okazuje się sortowanie przez scalanie. Mimo gwarantowanej złożoności $\mathcal{O}(N\log{N}) $, algorytm ten wymaga ciągłego alokowania dodatkowej pamięci, w przeciwieństwie do pozostałych metod, które wykonują operacje w miejscu (in-place).
+Wszystkie algorytmy dla danych nieposortowanych zbliżają się do średniej złożoności czasowej równej $\mathcal{O}(N\log{N}) $, co stanowi ich maksymalną potencjalną wydajność. Najwydajniejsze okazało się w warunkach testowych sortowanie introspektywne, które wykorzystuje szybkość algorytmu Quicksort oraz, przy niekorzystnym ułożeniu danych, zmienia algorytmy sortowania na bardziej wydajne. Najmniej wydajne okazuje się sortowanie przez scalanie. Mimo gwarantowanej złożoności $\mathcal{O}(N\log{N}) $, algorytm ten wymaga ciągłego alokowania dodatkowej pamięci, w przeciwieństwie do pozostałych metod, które wykonują operacje w miejscu (in-place).
 
 \subsection{Wpływ początkowego uporządkowania danych}
 Poniżej zostanie porównany wpływ ilości procentowej początkowo posortowanych danych na wydajność sortowania.
