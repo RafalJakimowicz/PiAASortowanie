@@ -34,6 +34,8 @@
 
 \maketitle
 \tableofcontents
+\listoffigures
+\listoftables
 \newpage
 
 % --- 1. WPROWADZENIE ---
@@ -45,7 +47,7 @@ W niniejszym raporcie przedstawiono implementację oraz analizę efektywności t
 Poniżej zostanie opisana teoretyczna charakterystyka wybranych metod sortowania, oraz opisana ich teoretyczna złożoność czasowa algorytmów dla przypadku średniego i najgorszego.
 
 \subsection{Algorytm 1: Sortowanie przez scalanie}
-Algorytm działający zgodnie z zasadą "Devide and Conquer", dzielący sortowaną strukturę na coraz mniesze fragmenty za każdym razem na połowy z wykorzystaniem rekurencji które są poźniej scalane w posortowaną strukturę. 
+Algorytm działający zgodnie z zasadą "Divide and Conquer", dzielący sortowaną strukturę na coraz mniejsze fragmenty za każdym razem na połowy z wykorzystaniem rekurencji które są poźniej scalane w posortowaną strukturę. 
 \begin{itemize}
     \item Złożoność czasowa (przypadek średni): $\mathcal{O}(N\log{N})$
     \item Złożoność czasowa (przypadek najgorszy): $\mathcal{O}(N\log{N})$
@@ -67,28 +69,113 @@ Algorytm hybrydowy bazujący na algorytmie Quicksort, implemetujący również s
 
 % --- 3. EKSPERYMENTY I WYNIKI ---
 \section{Przebieg eksperymentów i wyniki}
-% Zgodnie z wytycznymi: omówienie przebiegu eksperymentów i wyniki w postaci tabel/wykresów.
-Eksperymenty przeprowadzono dla 100 losowych tablic o rozmiarach: 10 000, 50 000, 100 000, 500 000 oraz 1 000 000. Badano czas wykonania dla tablic losowych, częściowo posortowanych (od 25\% do 99,7\%) oraz posortowanych w odwrotnej kolejności.
+Eksperymenty przeprowadzono dla 100 losowych tablic o rozmiarach: 10 000, 50 000, 100 000, 500 000 oraz 1 000 000. Badano czas wykonania dla tablic losowych, częściowo posortowanych (25\%, 50\%, 75\%, 95\%, 99\%, 99.7\%) oraz posortowanych w odwrotnej kolejności.
 
 \subsection{Wyniki dla tablic całkowicie losowych}
-Tutaj opisz, jak zachowały się algorytmy. Poniżej przykład wstawienia wykresu wygenerowanego w Pythonie:
+Algorytmy zostały porównane w sortowaniu danych o rozkładzie losowym, średnie czasy zostały przedstawione w tabelach poniżej. Sortowanymi danymi były liczby typu \textbf{uint32\_t} w standardzie C++(20), są to liczby dodatnie 32 bitowe.
 
-% Przykład wstawienia obrazka (odkomentuj i zmień nazwę pliku, gdy wygenerujesz wykres)
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.8\textwidth]{wykres_losowe.png}
-%     \caption{Porównanie czasów działania dla danych losowych}
-%     \label{fig:losowe}
-% \end{figure}
+% --- TABELA 1: Wpływ rozmiaru danych ---
+\begin{table}[H]
+    \centering
+    \label{tab:size_impact}
+    \begin{tabular}{|r|r|r|r|}
+        \toprule
+        \textbf{Rozmiar tablicy ($N$)} & \textbf{Quicksort [ms]} & \textbf{Introsort [ms]} & \textbf{Mergesort [ms]} \\
+        \midrule
+        10 000      & 2.23   & 1.93   & 3.54   \\
+        50 000      & 12.66  & 10.92  & 19.95  \\
+        100 000     & 26.41  & 22.75  & 41.04  \\
+        500 000     & 154.13 & 139.90 & 248.84 \\
+        1 000 000   & 337.11 & 292.42 & 508.27 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Średni czas sortowania dla danych o rozkładzie losowym w zależności od rozmiaru tablicy ($N$)}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{0_sort.png}
+    \caption{Porównanie czasów działania dla danych losowych}
+    \label{fig:losowe}
+\end{figure}
+
+Wszystkie algorytmy dla danych nieposortowanych zbliżają się do średniej złożoności czasowej równej $\mathcal{O}(N\log{N}) $, co jest ich maksymalną potencjalną wydajnością. Najwydajniejsze okazało się w warunkach testowych sortowanie introspektywne, wykorzystuje szybkość algorytmu Quicksort oraz przy niekorzystnym ułożeniu danych zmienia algorytmy sortowania na bardziej wydajne. Najmniej wydajne okazuje się sortowanie przez scalanie. Mimo gwarantowanej złożoności $\mathcal{O}(N\log{N}) $, algorytm ten wymaga ciągłego alokowania dodatkowej pamięci, w przeciwieństwie do pozostałych metod, które wykonują operacje w miejscu (in-place).
 
 \subsection{Wpływ początkowego uporządkowania danych}
-Tutaj wstaw i skomentuj wykresy dla różnego procentu posortowania oraz dla tablic ułożonych odwrotnie.
+Poniżej zostanie porównany wpływ ilości procentowej początkowo posortowanych danych na wydajność sortowania.
+% --- TABELA 2: Wpływ stopnia posortowania ---
+\begin{table}[H]
+    \centering
+    \label{tab:state_impact}
+    \begin{tabular}{|l|r|r|r|}
+        \toprule
+        \textbf{Stan początkowy danych} & \textbf{Quicksort [ms]} & \textbf{Introsort [ms]} & \textbf{Mergesort [ms]} \\
+        \midrule
+        Rozkład losowy (0\%)   & 337.11  & 292.42  & 508.27 \\
+        25\% posortowane       & 343.92  & 299.10  & 481.55 \\
+        50\% posortowane       & 331.23  & 286.93  & 471.17 \\
+        75\% posortowane       & 335.34  & 286.52  & 428.24 \\
+        95\% posortowane       & 470.57  & 634.87  & 408.39 \\
+        99\% posortowane       & 1205.64 & 971.68  & 403.60 \\
+        99.7\% posortowane     & 2304.34 & 1086.86 & 416.24 \\
+        Posortowane odwrotnie  & 207.37  & 174.03  & 398.88 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Średni czas sortowania tablicy o rozmiarze $N = 1\,000\,000$ w zależności od ilości posortowanych danych}
+\end{table}
+
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{merge.png}
+    \caption{Wydajność algorytmu sortowania przez scalanie}
+    \label{fig:merge_sort}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{quick.png}
+    \caption{Wydajność algorytmu sortowania Quicksort}
+    \label{fig:quick_sort}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{intro.png}
+    \caption{Wydajność algorytmu sortowania introspektywnego}
+    \label{fig:intro_sort}
+\end{figure}
+
+Względną wydajność w odniesieniu do siebie wszystkie algorytmy zachowują do ilości początkowo posortowanych danych wynoszącej 75\%. Natomiast im więcej danych jest już posortowanych to dynamika zmnienia się następująco
+\begin{itemize}
+    \item Quicksort znacząco zwalnia zblizając się do wydajności najgorszego przypadku $\mathcal{O}(n^2)$, jest to powodowane przez niekorzystny podział tablic przy danych posortowanych
+    \item Sortowanie przez scalanie zachowuje wydajność, potwierdza to złożoność $\mathcal{O}(N\log{N})$ w najgorszym przypadku. Wydajność tego algorytmu jest odporna na ułożenie danych.
+    \item Sortowanie introspektywne początkowo zachowuje się jak Quicksort natomiast wykrywanie nadmiernej rekurencji i przełączenie na sortowanie przez kopcowanie, powoduje zachowanie wydajności na poziomie $\mathcal{O}(N\log{N})$.
+\end{itemize} 
+
 
 % --- 4. PODSUMOWANIE I WNIOSKI ---
 \section{Podsumowanie i wnioski}
-% Zgodnie z wytycznymi: wnioski i wyjaśnienie niezgodności z przewidywaniami.
-Podsumowanie uzyskanych wyników. 
-W tej sekcji odnieś się do tego, czy czasy zmierzone w eksperymentach pokrywają się z teoretyczną złożonością algorytmów opisaną w rozdziale 2. Jeśli np. QuickSort zadziałał gorzej na posortowanych danych (osiągając czas $\mathcal{O}(N^2)$), należy to tutaj wyjaśnić.
+% --- 4. PODSUMOWANIE I WNIOSKI ---
+\section{Podsumowanie i wnioski}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{barchart.png}
+    \caption{Wydajność wszystkich algorytmów dla liczby elementów N=500 000}
+    \label{fig:barchart}
+\end{figure}
+
+Przeprowadzone eksperymenty (co obrazuje m.in. wykres na rysunku \ref{fig:barchart}) w pełni potwierdzają założenia analizy teoretycznej opisanej w rozdziale 2. Na podstawie zebranych danych z pomiarów czasowych można sformułować następujące wnioski:
+
+\begin{itemize}
+    \item \textbf{Potwierdzenie teoretycznej złożoności:} Dla danych o rozkładzie losowym, wszystkie trzy algorytmy wykazały stabilną i skalowalną wydajność, zgodną z teoretyczną złożonością średniego przypadku, wynoszącą $\mathcal{O}(N\log{N})$.
+    \item \textbf{Podatność Quicksort na ułożenie danych:} Klasyczny algorytm Quicksort, mimo zastosowania skutecznej optymalizacji wyboru pivota ("mediana z trzech"), uległ drastycznej degradacji wydajności dla danych prawie całkowicie posortowanych (powyżej 95\%). Czas wykonania rósł wykładniczo, zbliżając się do najgorszego przypadku o złożoności $\mathcal{O}(N^2)$. Jest to bezpośredni skutek skrajnie niesymetrycznych podziałów tablicy przy głębokiej rekurencji.
+    \item \textbf{Przewaga sortowania introspektywnego (Introsort):} Algorytm hybrydowy okazał się najbardziej uniwersalnym i najszybszym rozwiązaniem w całym zestawieniu. Doskonale połączył wysoką wydajność Quicksorta dla danych losowych z bezpieczeństwem algorytmu przez kopcowanie. Wbudowany mechanizm wykrywania zbyt głębokiej rekurencji skutecznie przełączał tryb na Heapsort, powstrzymując degradację wydajności i utrzymując czas działania na poziomie $\mathcal{O}(N\log{N})$ dla danych silnie uporządkowanych.
+    \item \textbf{Niezawodność z kosztem pamieci (Mergesort):} Sortowanie przez scalanie jako jedyne wykazało całkowitą obojętność na początkowy układ danych wejściowych, gwarantując złożoność $\mathcal{O}(N\log{N})$ w każdej sytuacji. Narzut architektoniczny w postaci ciągłej alokacji dodatkowej pamięci i kopiowania danych sprawił, że jego całkowity czas wykonania był zauważalnie i konsekwentnie wyższy niż algorytmów operujących w miejscu (in-place).
+    \item \textbf{Optymalne warunki podziału:} Wszystkie algorytmy, w tym w szczególności Quicksort i Introsort, wykazały się świetnymi czasami dla danych posortowanych odwrotnie. W tym specyficznym ułożeniu, wybór pivota z trzech elementów zawsze trafia dokładnie w wartość środkową, idealnie dzieląc zbiór na równe połowy przy każdym zejściu rekurencyjnym.
+\end{itemize}
 
 % --- 5. LITERATURA ---
 \section{Literatura}
@@ -96,7 +183,7 @@ W tej sekcji odnieś się do tego, czy czasy zmierzone w eksperymentach pokrywaj
 \begin{thebibliography}{9}
     \bibitem{jelen} Jeleń Ł., \textit{Notatki do wykładu}. %
     \bibitem{cormen} Cormen T., Leiserson C.E., Rivest R.L., Stein C., \textit{Wprowadzenie do algorytmów}, Wydawnictwo Naukowe PWN. %
-    \bibitem Dokumentacja C++.
+    \bibitem {Cpp} Dokumentacja C++.
 \end{thebibliography}
 
 \end{document}
