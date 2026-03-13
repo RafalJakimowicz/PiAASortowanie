@@ -20,22 +20,26 @@ public:
     };
 protected:
     typename std::vector<T>::iterator partition(typename std::vector<T>::iterator start, typename std::vector<T>::iterator end){
-        //pivot jako ostatnia pozycja w przedziale
-        typename std::vector<T>::iterator pivot = end - 1;
-        T wartosc = *pivot;
+        auto mid = start + std::distance(start, end) / 2;
+        auto last = end - 1;
+
+        //uzywamy techniki mediany z pocztaku konca i sorku przedizlau co zapobiega posortowanym tablica ktore moga zwolnic algorytm
+        if (*mid < *start) std::iter_swap(mid, start);
+        if (*last < *start) std::iter_swap(last, start);
+        if (*last < *mid) std::iter_swap(last, mid);
+
+        std::iter_swap(mid, last);
+
+        T wartosc = *last;
         typename std::vector<T>::iterator granica = start;
-        for(;start != end - 1; start++){
-            if(*start <= wartosc){
+        for(auto it = start; it != end - 1; it++){
+            if(*it <= wartosc){
                 //przesuniecie granicy w prawo gdy iterator jest mneijszy od pivota
-                T tmp = *start;
-                *start = *granica;
-                *granica = tmp;
-                granica +=1;
+                std::iter_swap(it, granica);
+                ++granica;
             }
         }
-        T t_granica = *granica;
-        *granica = *pivot;
-        *pivot = t_granica;
+        std::iter_swap(granica, last);
         return granica;
     };
 };

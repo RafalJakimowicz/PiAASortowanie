@@ -13,9 +13,7 @@ public:
         for(typename std::vector<T>::iterator i = start; i != end; i++){
             for(typename std::vector<T>::iterator j = i + 1; j != end; j++){
                 if(*i > *j){
-                    T tmp = *i;
-                    *i = *j;
-                    *j = tmp;
+                    std::iter_swap(i,j);
                 }
             }
         }

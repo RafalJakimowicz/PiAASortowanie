@@ -45,21 +45,21 @@ W niniejszym raporcie przedstawiono implementację oraz analizę efektywności t
 Poniżej zostanie opisana teoretyczna charakterystyka wybranych metod sortowania, oraz opisana ich teoretyczna złożoność czasowa algorytmów dla przypadku średniego i najgorszego.
 
 \subsection{Algorytm 1: Sortowanie przez scalanie}
-Krótki opis działania algorytmu...
+Algorytm działający zgodnie z zasadą "Devide and Conquer", dzielący sortowaną strukturę na coraz mniesze fragmenty za każdym razem na połowy z wykorzystaniem rekurencji które są poźniej scalane w posortowaną strukturę. 
 \begin{itemize}
     \item Złożoność czasowa (przypadek średni): $\mathcal{O}(N\log{N})$
     \item Złożoność czasowa (przypadek najgorszy): $\mathcal{O}(N\log{N})$
 \end{itemize}
 
 \subsection{Algorytm 2: Quicksort}
-Krótki opis działania algorytmu...
+Algorytm działający zgodnie z zasadą "Devide and Conquer", w strukturze wybierany jest element i po jego lewej stronie są umieszczane elementy nie większe od niego a po prawej elementy większe, co powoduje poprawne ułożenie danego elementu w tablicy, element ten nosi nazwę pivot. Algorytm jest powtarzany rekurencyjnie dla liczb wiekszych i mniejszych od pivot. Implemenatcja wybiera pivot metodą "Mediany z trzech".
 \begin{itemize}
     \item Złożoność czasowa (przypadek średni): $\mathcal{O}(N\log{N})$
     \item Złożoność czasowa (przypadek najgorszy): $\mathcal{O}(n^2)$
 \end{itemize}
 
 \subsection{Algorytm 3: sortowanie introspektywne}
-Krótki opis działania algorytmu...
+Algorytm hybrydowy bazujący na algorytmie Quicksort, implemetujący również sortowanie przez wstawianie i sortowanie przez kopcowanie. Algorytm mierzy warstwy rekurencji sortowania Quicksort i jeśli głębokość przekroczy wartość optymalną zmienia sie na sortowanie przez kopcowanie dla tego fragmentu danych. Dodatkową właściwością jest również zamiana algorytmu sortowania na sortowanie przez wstawianie dla fragmentów poniżej danej liczby elementów. 
 \begin{itemize}
     \item Złożoność czasowa (przypadek średni): $\mathcal{O}(N\log{N})$
     \item Złożoność czasowa (przypadek najgorszy): $\mathcal{O}(N\log{N})$
